@@ -1,0 +1,17 @@
+ <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px">
+        <mat-form-field fxFlex="50">
+            <mat-label i18n>Gender</mat-label>
+                <mat-select name="gender" required ngModel>
+                    <mat-option value="Male" i18n>Male</mat-option>
+                    <mat-option value="Female" i18n>Female</mat-option>
+                    <mat-option value="Non-Binary" i18n>Other</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-form-field fxFlex="50">
+            <input matInput placeholder="age" id="age" type="number" name="age" ngModel required i18n-placeholder 
+            oninput="this.value=this.value.replace(/[^\d]/,'')"  min=0 max=100>
+        </mat-form-field>
+    </div>

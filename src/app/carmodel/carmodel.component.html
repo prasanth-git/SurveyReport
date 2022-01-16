@@ -1,0 +1,26 @@
+
+
+<!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px" > -->
+    <div *ngFor = "let item of createArr()">
+
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <!-- Car Model-->
+     <mat-form-field fxFlex="100">
+        <mat-label i18n>Car Model</mat-label>
+        <mat-select  name="{{item}}Model" required ngModel>
+            <mat-option value="bmw" i18n>BMW</mat-option>
+            <mat-option value="lam" i18n>Lambhorghini</mat-option>
+            <mat-option value="ford" i18n>Ford</mat-option>
+            <mat-option value="Others" i18n>Others</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <!-- Car type-->
+    <mat-form-field fxFlex="50">
+        <input matInput placeholder="Car Type" id="type"  name="{{item}}Type" ngModel required 
+        i18n-placeholder 
+        >
+    </mat-form-field>
+    
+</div>
+</div>
+<!-- </div> -->
