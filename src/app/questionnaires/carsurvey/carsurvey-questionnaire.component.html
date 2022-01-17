@@ -1,14 +1,13 @@
 <mat-card class="example-card">
-  <mat-card-header>
+  <!-- <mat-card-header>
     <mat-card-title>Automotive Sales Customer Survey Questionnaire</mat-card-title>
-    <!-- <mat-card-subtitle>This is a sample questionnaire for customer </mat-card-subtitle> -->
-  </mat-card-header>
+  </mat-card-header> -->
   <mat-card-content>
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-      <fieldset >
-      <mat-horizontal-stepper linear #stepper (selectionChange)="onStepChange($event, stepper,f)" >
-      
-        <!-- <mat-step #personal="ngModelGroup" ngModelGroup="personal"  [completed]="personal.valid">
+      <!-- <fieldset > -->
+      <mat-horizontal-stepper linear #stepper (selectionChange)="onStepChange($event,f)" >
+
+         <mat-step #personal="ngModelGroup" ngModelGroup="personal"  [completed]="personal.valid">
           <ng-template matStepLabel>Personal</ng-template>
           <app-contact></app-contact>
           <button 
@@ -16,6 +15,8 @@
               matStepperNext
               color="primary">Next</button>
         </mat-step>
+
+
         <mat-step #transportation="ngModelGroup" ngModelGroup="transportation"  *ngIf="isAdoloscent"
               [completed]="transportation.valid">
           <ng-template matStepLabel>Transportation</ng-template>
@@ -25,7 +26,8 @@
           matStepperNext
           color="primary">Next</button>
        </mat-step>
-        
+
+
         <mat-step #experience="ngModelGroup" ngModelGroup="experience"
          *ngIf="isEndedBeforeFirstTimers()" [completed]="experience.valid">
           <ng-template matStepLabel>First-timers</ng-template>
@@ -34,13 +36,12 @@
           mat-raised-button
           matStepperNext
           color="primary">Next</button>
-        </mat-step> -->
-        
-        <!-- *ngIf="!isEnded" -->
+        </mat-step> 
+
 
         <mat-step #vehicletype="ngModelGroup" ngModelGroup="vehicletype"
           [completed]="vehicletype.valid" 
-          
+          *ngIf="!isEnded"
           >
           <ng-template matStepLabel>Vehicle Details</ng-template>
           <app-vehicletype></app-vehicletype>
@@ -59,14 +60,15 @@
         <ng-template matStepLabel>CarModel</ng-template>
         <app-carmodel numberOfCars={{numberOfCars}}></app-carmodel>
         <button 
-        type="button" (click) = "validatePattern(f)"
+        type="button" (click) = "validatePattern(f,stepper)"
         mat-raised-button
         color="primary">Next</button>
-        <mat-error *ngIf="errorCount!==0">BMW car type is wrong, please correct it!</mat-error>
+        <div color="red" *ngIf="errorCount!==0">{{MODEL_ERROR_MSG}}
+          <mat-icon *ngIf="errorCount!==0" matTooltip={{TOOL_TIP_MSG}} inline="true">help</mat-icon>
+        </div>
       </mat-step>
 
 
-        
        <!--final step-->
         <mat-step >
           <ng-template matStepLabel>Done</ng-template>
@@ -77,8 +79,8 @@
           </div>
         </mat-step>
       </mat-horizontal-stepper>
-    </fieldset>
+    <!-- </fieldset> -->
     </form>
-    <pre>{{ f.value | json }}</pre>
+    <!-- <pre>{{ f.value | json }}</pre> -->
   </mat-card-content>
 </mat-card>

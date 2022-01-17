@@ -1,35 +1,33 @@
 
-
-    <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px">
+ <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px">
 
         <mat-form-field fxFlex="100">
-            <mat-label i18n>Which drivetrain do you prefer?</mat-label>
+            <mat-label >Which drivetrain do you prefer?</mat-label>
             <mat-select  name="drivetrain" 
             ngModel>
-                <mat-option value="fwd" i18n>FWD </mat-option>
-                <mat-option value="rwd" i18n>RWD </mat-option>
-                <mat-option value="noidea" i18n>I dont know</mat-option>
+                <mat-option value="fwd" >FWD </mat-option>
+                <mat-option value="rwd" >RWD </mat-option>
+                <mat-option value="noidea" >I dont know</mat-option>
             </mat-select>
         </mat-form-field>
-    </div> -->
-
-<!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px">
+    </div> 
+ <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px">
 
     <mat-form-field fxFlex="100">
-        <mat-label i18n>Are you worried about fuel emissions?</mat-label>
+        <mat-label >Are you worried about fuel emissions?</mat-label>
         <mat-select  name="emission"
          ngModel>
-            <mat-option value="yes" i18n>Yes</mat-option>
-            <mat-option value="no" i18n>No</mat-option>
+            <mat-option value="yes" >Yes</mat-option>
+            <mat-option value="no" >No</mat-option>
         </mat-select>
     </mat-form-field>
-</div> -->
+</div> 
 
 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="25px" fxLayoutGap.lt-md="0px">
     <mat-form-field fxFlex="150">
     <input matInput placeholder="How many cars do you have in your family?" id="noCars"
      type="number" name="noCars"
-    ngModel required i18n-placeholder 
+    ngModel required 
     oninput="this.value=this.value.replace(/[^\d]/,'')"  min=1 max=10>
 </mat-form-field>
 </div>

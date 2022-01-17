@@ -1,5 +1,5 @@
-import { Component, Input, SkipSelf } from '@angular/core';
-import { ControlContainer, FormControl, Validators } from '@angular/forms';
+import { Component, SkipSelf } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',

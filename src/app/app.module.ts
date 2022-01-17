@@ -16,6 +16,7 @@ import { MatDatepickerModule} from '@angular/material/datepicker'
 import { MatStepperModule} from '@angular/material/stepper'
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { ContactComponent } from './components/contact/contact.component';
 import { CarSurveyQuestionnaireComponent } from './questionnaires/carsurvey/carsurvey-questionnaire.component';
@@ -23,6 +24,7 @@ import { TransportationComponent } from './transportation/transportation.compone
 import { ExperienceComponent } from './experience/experience.component';
 import { VehicletypeComponent } from './vehicletype/vehicletype.component';
 import { CarmodelComponent } from './carmodel/carmodel.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -40,16 +42,17 @@ import { CarmodelComponent } from './carmodel/carmodel.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule, 
-    MatInputModule, 
+    MatIconModule,
+    MatInputModule,
     MatSelectModule,
     MatCardModule,
     MatDatepickerModule,
     MatMomentDateModule,
     MatAutocompleteModule,
+    MatTooltipModule,
     MatStepperModule,
     MatButtonModule,
-    ReactiveFormsModule ,
-    
+    ReactiveFormsModule,
   ],
   
   providers: [ ],
