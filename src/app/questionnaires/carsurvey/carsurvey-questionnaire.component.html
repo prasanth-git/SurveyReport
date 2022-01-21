@@ -63,7 +63,7 @@
         type="button" (click) = "validatePattern(f,stepper)"
         mat-raised-button
         color="primary">Next</button>
-        <div color="red" *ngIf="errorCount!==0">{{MODEL_ERROR_MSG}}
+        <div color="red" *ngIf="errorCount!==0">{{MODEL_ERROR_MSG}}, pls submit the data!
           <mat-icon *ngIf="errorCount!==0" matTooltip={{TOOL_TIP_MSG}} inline="true">help</mat-icon>
         </div>
       </mat-step>

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { stringify } from 'querystring';
+import { ProcessdataService } from 'src/app/processdata.service';
+import { Carsurvey } from './carsurvey.model';
 
 @Component({
   selector: 'app-carsurvey-questionnaire',
@@ -21,17 +24,19 @@ export class CarSurveyQuestionnaireComponent {
   isAdoloscent = true;
   isEnded = false;
   isCarModelDone = false;
+   report: Carsurvey;
   numberOfCars : number;
   errorCount = 0;
+
+  constructor(
+    private processdataService : ProcessdataService 
+) { this.report =new Carsurvey();}
 
   public openNextStep() : void {
     this.isCarModelDone = true;
   }
 
-  public onSubmit(form: NgForm): void {
-    const json = JSON.stringify(form.value);
-    return;
-  }
+  public onSubmit(form: NgForm): void { return;}
 
   public isEndedBeforeFirstTimers() : boolean {
          return (!this.isEnded && this.isFirstTimers)?  true : false;
@@ -41,8 +46,13 @@ export class CarSurveyQuestionnaireComponent {
   var typemodel = form.value.vehicletypemodel;
   this.errorCount = 0;
   const mapped = Object.keys(typemodel).map(key => ({type: key, value: typemodel[key]}));
+  this.report.carmake = [];
+  this.report.carmodel = [];
 
   for(var i = 0 ; i<mapped.length; i=i+2){
+
+    var cartype  = mapped[i].value as never ;
+    var carmodel = mapped[i+1].value as never;
 
     if(mapped[i].value === this.BMW){
       var car_type = (mapped[i+1].value).toLowerCase();
@@ -52,29 +62,37 @@ export class CarSurveyQuestionnaireComponent {
             if(car_type.match(this.REGEX)===null || 
                 (car_type.match(this.REGEX)!==null && car_type.match(this.REGEX)[0].length !==3)) {
               this.errorCount++;
+            } else {
+              this.report.carmake.push(cartype);
+              this.report.carmodel.push(carmodel);
             }
       } 
       else if(car_type.startsWith("x") || car_type.startsWith("z")){
         if(car_type.match(this.REGEX)===null || 
                (car_type.match(this.REGEX)!==null && car_type.match(this.REGEX)[0].length !==1)) {
          this.errorCount++;
-         }
+         }  else {
+          this.report.carmake.push(cartype);
+          this.report.carmodel.push(carmodel);
+        }
       }
       else {
         this.errorCount++;
       }
     }
+    else {
+      this.report.carmake.push(cartype);
+      this.report.carmodel.push(carmodel);
+    }
   }
   if(this.errorCount === 0) {
+
     stepper.next();
   }
   }
 
   onClick(form: NgForm): void {
-    const json = JSON.stringify(form.value);
-    console.log("click.."+json);
-    //save the data here
-    
+   this.processdataService.processJson(this.report);
   }
 
   public onStepChange(event: any, form :NgForm): void { 
@@ -83,12 +101,16 @@ export class CarSurveyQuestionnaireComponent {
     if(form.value.personal.age < 18) {
        this.isEnded = true;
        this.isAdoloscent = false;
+       this.report.adolescents = 100; 
+
     }
     else if((form.value.personal.age >  17) && ( form.value.personal.age < 26 )) {
+      this.report.firsttimers = 1;
       this.isFirstTimers = true;
     }
   }
     if(form.value.transportation!== undefined && form.value.transportation.preference == "no" ) {
+      this.report.unlicensed = 1;
         this.isEnded = true;
     }
     if(form.value.experience !== undefined && form.value.experience.exp == "yes") {
@@ -96,7 +118,18 @@ export class CarSurveyQuestionnaireComponent {
         this.msg = this.SURVEY_ENDED_EXP;
     }
     if(form.value.vehicletype !== undefined) {
+      this.report.targetables = 1;
       this.numberOfCars = (form.value.vehicletype.noCars);
+      this.report.AvgCars = form.value.vehicletype.noCars;
+      
+      if(form.value.vehicletype.drivetrain === "fwd") {
+        this.report.FWD = 1;
+      }
+      else if(form.value.vehicletype.drivetrain === "noidea"){
+        this.report.IDK = 1;
+      }
     }
+
+    
   }
 }
