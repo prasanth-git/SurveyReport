@@ -1,3 +1,10 @@
+<div class="content" role="main">
+
+  <!-- Highlight Card -->
+  <div class="card highlight-card card-small">
+    <span>Automotive Sales Customer Survey</span>
+  </div>
+</div>
 <div class="card-container">
 <mat-card class="example-card">
   <!-- <mat-card-header>
@@ -8,7 +15,7 @@
       <!-- <fieldset > -->
       <mat-horizontal-stepper linear #stepper (selectionChange)="onStepChange($event,f)" >
 
-         <mat-step #personal="ngModelGroup" ngModelGroup="personal"  [completed]="personal.valid">
+          <mat-step #personal="ngModelGroup" ngModelGroup="personal"  [completed]="personal.valid">
           <ng-template matStepLabel>Personal</ng-template>
           <app-contact></app-contact>
           <button 
@@ -37,7 +44,7 @@
           mat-raised-button
           matStepperNext
           color="primary">Next</button>
-        </mat-step> 
+        </mat-step>  
 
 
         <mat-step #vehicletype="ngModelGroup" ngModelGroup="vehicletype"
@@ -64,7 +71,7 @@
         type="button" (click) = "validatePattern(f,stepper)"
         mat-raised-button
         color="primary">Next</button>
-        <div color="red" *ngIf="errorCount!==0">{{MODEL_ERROR_MSG}}, pls submit the data!
+        <div color="red" *ngIf="errorCount!==0">{{MODEL_ERROR_MSG}}
           <mat-icon *ngIf="errorCount!==0" matTooltip={{TOOL_TIP_MSG}} inline="true">help</mat-icon>
         </div>
       </mat-step>

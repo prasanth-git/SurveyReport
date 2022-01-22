@@ -1,1 +1,52 @@
-<p>report works!</p>
+<div class="contents">
+  <div class ="row">
+    <div class="col-md-6 quarter" style="width:500px;">
+        <canvas baseChart *ngIf="pieChartData"
+        [data]="pieChartData" 
+        [labels]="pieChartLabels" 
+        [chartType]="pieChartType"
+        [options]="pieChartOptions1"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+      </canvas>
+    <br>
+    <mat-card style="text-align:center;">Targetables who care about fuel emissions: <b>{{carefuel  | number : '1.2'}} %</b> </mat-card>
+    </div>
+
+   
+    <div class="col-md-6 quarter" style="width:500px;">
+        <canvas baseChart *ngIf="pieChartData"
+        [data]="pieChartData2" 
+        [labels]="pieChartLabels2" 
+        [chartType]="pieChartType"
+        [options]="pieChartOptions2"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+      </canvas>
+      <br>
+      <mat-card style="text-align:center;">The average amount of cars in a family :<b> {{average  | number : '1.2'}}</b></mat-card>
+    </div>
+  </div>
+    <div class="col-md-6 quarter" style="width:500px;">
+        <canvas baseChart *ngIf="pieChartData"
+        [data]="pieChartData3" 
+        [labels]="pieChartLabels3" 
+        [chartType]="pieChartType"
+        [options]="pieChartOptions3"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+      </canvas>
+      </div>
+
+    <div class="col-md-6 quarter"  style="width:500px;">
+      <canvas baseChart *ngIf="pieChartData && chartReady"
+      [data]="pieChartData4" 
+      [labels]="pieChartLabels4" 
+      [chartType]="pieChartType"
+      [options]="pieChartOptions4"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend">
+    </canvas>
+    </div>
+
+  </div>

@@ -1,0 +1,10 @@
+.quarter{
+    width:40%;
+    height:30%;
+    float:left;
+    border:1px  black;
+  }
+  .contents{
+    height:25%;
+    width:100%;
+  }

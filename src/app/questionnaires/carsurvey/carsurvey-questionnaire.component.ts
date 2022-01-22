@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { stringify } from 'querystring';
 import { ProcessdataService } from 'src/app/processdata.service';
 import { Carsurvey } from './carsurvey.model';
+import {CarSurveyConstants} from './carsurvey-constants';
 
 @Component({
   selector: 'app-carsurvey-questionnaire',
@@ -12,14 +12,9 @@ import { Carsurvey } from './carsurvey.model';
 })
 export class CarSurveyQuestionnaireComponent {
 
-  BMW ="BMW";
-  MODEL_ERROR_MSG = "Wrong BMW Type!  ";
-  REGEX = /\d+/g;
-  SURVEY_ENDED= "Thanks for your time, Survey is ended!";
-  SURVEY_ENDED_EXP = "We are targeting more experienced clients, thank you for your interest ";
-  TOOL_TIP_MSG = "Format should be (3 Numbers and Starts with \"M\" [or] Ends with \"d\" or \"i\") [or] (Starts with \"X\" or \"Z\" and 1 number)";
-
-  msg :string = this.SURVEY_ENDED; //default message
+  TOOL_TIP_MSG = CarSurveyConstants.TOOL_TIP_MSG;
+  MODEL_ERROR_MSG = CarSurveyConstants.MODEL_ERROR_MSG;
+  msg :string = CarSurveyConstants.SURVEY_ENDED; //default message
   isFirstTimers: boolean = false;
   isAdoloscent: boolean = true;
   isEnded: boolean = false;
@@ -51,17 +46,18 @@ export class CarSurveyQuestionnaireComponent {
   this.report.carmodel = [];
 
   for(var i = 0 ; i<mapped.length; i=i+2){
+    
 
     var cartype  = mapped[i].value as never ;
-    var carmodel = mapped[i+1].value as never;
+    var carmodel = (mapped[i+1].value).toUpperCase() as never;
 
-    if(mapped[i].value === this.BMW){
+    if(mapped[i].value === CarSurveyConstants.BMW){
       var car_type = (mapped[i+1].value).toLowerCase();
 
       if(car_type.startsWith("m")|| car_type.startsWith("d",car_type.length-1)||
                      car_type.startsWith("i",car_type.length-1)){
-            if(car_type.match(this.REGEX)===null || 
-                (car_type.match(this.REGEX)!==null && car_type.match(this.REGEX)[0].length !==3)) {
+            if(car_type.match(CarSurveyConstants.REGEX)===null || 
+                (car_type.match(CarSurveyConstants.REGEX)!==null && car_type.match(CarSurveyConstants.REGEX)[0].length !==3)) {
               this.errorCount++;
             } else {
               this.report.carmake.push(cartype);
@@ -69,8 +65,8 @@ export class CarSurveyQuestionnaireComponent {
             }
       } 
       else if(car_type.startsWith("x") || car_type.startsWith("z")){
-        if(car_type.match(this.REGEX)===null || 
-               (car_type.match(this.REGEX)!==null && car_type.match(this.REGEX)[0].length !==1)) {
+        if(car_type.match(CarSurveyConstants.REGEX)===null || 
+               (car_type.match(CarSurveyConstants.REGEX)!==null && car_type.match(CarSurveyConstants.REGEX)[0].length !==1)) {
          this.errorCount++;
          }  else {
           this.report.carmake.push(cartype);
@@ -119,7 +115,7 @@ export class CarSurveyQuestionnaireComponent {
     }
     if(form.value.experience !== undefined && form.value.experience.exp == "yes") {
         this.isEnded = true;
-        this.msg = this.SURVEY_ENDED_EXP;
+        this.msg = CarSurveyConstants.SURVEY_ENDED_EXP;
     }
     if(form.value.vehicletype !== undefined) {
       this.report.targetables = 1;
@@ -129,11 +125,16 @@ export class CarSurveyQuestionnaireComponent {
       if(form.value.vehicletype.drivetrain === "fwd") {
         this.report.FWD = 1;
       }
-      else if(form.value.vehicletype.drivetrain === "noidea"){
+      else if(form.value.vehicletype.drivetrain === "noidea") {
         this.report.IDK = 1;
+      }
+      else if(form.value.vehicletype.drivetrain === "rwd") {
+        this.report.RWD = 1;
       }
     }
 
     
   }
+
+
 }
