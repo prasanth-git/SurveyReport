@@ -1,3 +1,4 @@
+<div class="card-container">
 <mat-card class="example-card">
   <!-- <mat-card-header>
     <mat-card-title>Automotive Sales Customer Survey Questionnaire</mat-card-title>
@@ -73,8 +74,9 @@
         <mat-step >
           <ng-template matStepLabel>Done</ng-template>
           <p>{{msg}}</p>
+          <br>
           <div>
-            <button mat-raised-button type="button" (click)="onClick(f)"
+            <button mat-raised-button type="button" (click)="onClick(f)" 
              color="primary">Submit Data</button>
           </div>
         </mat-step>
@@ -84,3 +86,4 @@
     <!-- <pre>{{ f.value | json }}</pre> -->
   </mat-card-content>
 </mat-card>
+</div>

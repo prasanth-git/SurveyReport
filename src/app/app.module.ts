@@ -26,6 +26,7 @@ import { ExperienceComponent } from './experience/experience.component';
 import { VehicletypeComponent } from './vehicletype/vehicletype.component';
 import { CarmodelComponent } from './carmodel/carmodel.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
     ExperienceComponent,
     VehicletypeComponent,
     CarmodelComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,

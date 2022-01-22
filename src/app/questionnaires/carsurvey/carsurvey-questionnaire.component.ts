@@ -12,22 +12,23 @@ import { Carsurvey } from './carsurvey.model';
 })
 export class CarSurveyQuestionnaireComponent {
 
-  BMW ="bmw";
+  BMW ="BMW";
   MODEL_ERROR_MSG = "Wrong BMW Type!  ";
   REGEX = /\d+/g;
   SURVEY_ENDED= "Thanks for your time, Survey is ended!";
   SURVEY_ENDED_EXP = "We are targeting more experienced clients, thank you for your interest ";
   TOOL_TIP_MSG = "Format should be (3 Numbers and Starts with \"M\" [or] Ends with \"d\" or \"i\") [or] (Starts with \"X\" or \"Z\" and 1 number)";
 
-  msg = this.SURVEY_ENDED; //default message
-  isFirstTimers = false;
-  isAdoloscent = true;
-  isEnded = false;
-  isCarModelDone = false;
-   report: Carsurvey;
+  msg :string = this.SURVEY_ENDED; //default message
+  isFirstTimers: boolean = false;
+  isAdoloscent: boolean = true;
+  isEnded: boolean = false;
+  isCarModelDone: boolean = false;
+  report: Carsurvey;
   numberOfCars : number;
-  errorCount = 0;
-
+  errorCount:number = 0;
+  count: number = 0;
+  
   constructor(
     private processdataService : ProcessdataService 
 ) { this.report =new Carsurvey();}
@@ -92,7 +93,10 @@ export class CarSurveyQuestionnaireComponent {
   }
 
   onClick(form: NgForm): void {
-   this.processdataService.processJson(this.report);
+  form.resetForm();
+  this.count++;
+  if(this.count==1) //dont submit 
+      this.processdataService.processJson(this.report);
   }
 
   public onStepChange(event: any, form :NgForm): void { 
@@ -101,7 +105,7 @@ export class CarSurveyQuestionnaireComponent {
     if(form.value.personal.age < 18) {
        this.isEnded = true;
        this.isAdoloscent = false;
-       this.report.adolescents = 100; 
+       this.report.adolescents = 1; 
 
     }
     else if((form.value.personal.age >  17) && ( form.value.personal.age < 26 )) {
