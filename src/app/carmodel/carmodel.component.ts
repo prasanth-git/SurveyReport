@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SkipSelf } from '@angular/core';
+import { Component, Input, SkipSelf } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
 
 
@@ -15,12 +15,8 @@ import { ControlContainer } from '@angular/forms';
 export class CarmodelComponent {
 
   @Input() numberOfCars : number;
-  model= ["BMW","Lambhorghini","Audi"];
-  count = 0;
-
-  selectedItems: string;
-
-  createArr() {
+  
+  public createArr(): number[] {
     var items: number[] = [];
     for(var i = 1; i <= this.numberOfCars; i++){
       items.push(i);

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { ProcessdataService } from 'src/app/processdata.service';
+
+import { ProcessdataService } from '../../service/processdata.service';
 import { Carsurvey } from './carsurvey.model';
 import {CarSurveyConstants} from './carsurvey-constants';
 
@@ -12,8 +13,8 @@ import {CarSurveyConstants} from './carsurvey-constants';
 })
 export class CarSurveyQuestionnaireComponent {
 
-  TOOL_TIP_MSG = CarSurveyConstants.TOOL_TIP_MSG;
-  MODEL_ERROR_MSG = CarSurveyConstants.MODEL_ERROR_MSG;
+  TOOL_TIP_MSG: string= CarSurveyConstants.TOOL_TIP_MSG;
+  MODEL_ERROR_MSG: string = CarSurveyConstants.MODEL_ERROR_MSG;
   msg :string = CarSurveyConstants.SURVEY_ENDED; //default message
   isFirstTimers: boolean = false;
   isAdoloscent: boolean = true;
@@ -42,12 +43,11 @@ export class CarSurveyQuestionnaireComponent {
   var typemodel = form.value.vehicletypemodel;
   this.errorCount = 0;
   const mapped = Object.keys(typemodel).map(key => ({type: key, value: typemodel[key]}));
-  this.report.carmake = [];
-  this.report.carmodel = [];
+  this.report.carMake = [];
+  this.report.carModel = [];
 
   for(var i = 0 ; i<mapped.length; i=i+2){
-    
-
+  
     var cartype  = mapped[i].value as never ;
     var carmodel = (mapped[i+1].value).toUpperCase() as never;
 
@@ -60,8 +60,8 @@ export class CarSurveyQuestionnaireComponent {
                 (car_type.match(CarSurveyConstants.REGEX)!==null && car_type.match(CarSurveyConstants.REGEX)[0].length !==3)) {
               this.errorCount++;
             } else {
-              this.report.carmake.push(cartype);
-              this.report.carmodel.push(carmodel);
+              this.report.carMake.push(cartype);
+              this.report.carModel.push(carmodel);
             }
       } 
       else if(car_type.startsWith("x") || car_type.startsWith("z")){
@@ -69,8 +69,8 @@ export class CarSurveyQuestionnaireComponent {
                (car_type.match(CarSurveyConstants.REGEX)!==null && car_type.match(CarSurveyConstants.REGEX)[0].length !==1)) {
          this.errorCount++;
          }  else {
-          this.report.carmake.push(cartype);
-          this.report.carmodel.push(carmodel);
+          this.report.carMake.push(cartype);
+          this.report.carModel.push(carmodel);
         }
       }
       else {
@@ -78,8 +78,8 @@ export class CarSurveyQuestionnaireComponent {
       }
     }
     else {
-      this.report.carmake.push(cartype);
-      this.report.carmodel.push(carmodel);
+      this.report.carMake.push(cartype);
+      this.report.carModel.push(carmodel);
     }
   }
   if(this.errorCount === 0) {
@@ -91,7 +91,7 @@ export class CarSurveyQuestionnaireComponent {
   onClick(form: NgForm): void {
   form.resetForm();
   this.count++;
-  if(this.count==1) //dont submit 
+  if(this.count==1) 
       this.processdataService.processJson(this.report);
   }
 
@@ -105,22 +105,37 @@ export class CarSurveyQuestionnaireComponent {
 
     }
     else if((form.value.personal.age >  17) && ( form.value.personal.age < 26 )) {
-      this.report.firsttimers = 1;
       this.isFirstTimers = true;
     }
   }
-    if(form.value.transportation!== undefined && form.value.transportation.preference == "no" ) {
+    if(form.value.transportation!== undefined){
+     if( form.value.transportation.preference == "no" ) {
       this.report.unlicensed = 1;
         this.isEnded = true;
-    }
-    if(form.value.experience !== undefined && form.value.experience.exp == "yes") {
+    } 
+  }
+    if(form.value.experience !== undefined) {
+
+      if (form.value.experience.exp.length!=0){
+          this.report.firstTimers = 1
+      }
+    if(form.value.experience.exp == "yes") {
         this.isEnded = true;
         this.msg = CarSurveyConstants.SURVEY_ENDED_EXP;
     }
+  }
+
+
     if(form.value.vehicletype !== undefined) {
-      this.report.targetables = 1;
+
+      if(form.value.vehicletype.noCars.length !==0){
+        this.report.targetables = 1;
+        this.report.avgCars = form.value.vehicletype.noCars;
+      }
+        
+      
       this.numberOfCars = (form.value.vehicletype.noCars);
-      this.report.AvgCars = form.value.vehicletype.noCars;
+      
       
       if(form.value.vehicletype.drivetrain === "fwd") {
         this.report.FWD = 1;
@@ -132,9 +147,5 @@ export class CarSurveyQuestionnaireComponent {
         this.report.RWD = 1;
       }
     }
-
-    
   }
-
-
 }

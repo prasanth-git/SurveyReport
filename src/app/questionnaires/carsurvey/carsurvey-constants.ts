@@ -10,4 +10,5 @@ export class CarSurveyConstants {
     public static FORD = "FORD";
     public static AUDI ="AUDI"
     public static OTHERS = "OTHERS"
+    public static DATA_PATH = "./assets/data.json";
 }

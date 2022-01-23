@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'; 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CarSurveyConstants } from './questionnaires/carsurvey/carsurvey-constants';
 
-import { Carsurvey } from './questionnaires/carsurvey/carsurvey.model';
+import { Carsurvey } from '../questionnaires/carsurvey/carsurvey.model';
+import { CarSurveyConstants } from '../questionnaires/carsurvey/carsurvey-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +12,17 @@ export class ProcessdataService {
 
   constructor(private http: HttpClient) {}
 
+  public  getJSON(): Observable<any> {
+    return this.http.get(CarSurveyConstants.DATA_PATH);
+}
+
   public processJson(clientData: Carsurvey) :void {
     var  archive : Carsurvey;
-    
     this.getJSON().subscribe(data => {
       archive = data;
   });
 
   setTimeout(  () =>{
-    
     if((clientData.FWD!==undefined)) archive.FWD = archive.FWD + 1;
     if((clientData.RWD!==undefined)) archive.RWD = archive.RWD + 1;
     if((clientData.IDK!==undefined)) archive.IDK = archive.IDK + 1;
@@ -30,40 +32,38 @@ export class ProcessdataService {
     if((clientData.adolescents!==undefined)){
       archive.adolescents = archive.adolescents + 1;
     }
-    if((clientData.carefuel!==undefined)) {
-      archive.carefuel = archive.carefuel + 1;
+    if((clientData.careFuel!==undefined)) {
+      archive.careFuel = archive.careFuel + 1;
     }
-    if((clientData.firsttimers!==undefined)) archive.firsttimers = archive.firsttimers + 1;
+    if((clientData.firstTimers!==undefined)) archive.firstTimers = archive.firstTimers + 1;
 
     if((clientData.unlicensed!==undefined)) archive.unlicensed = archive.unlicensed + 1;
-    if((clientData.carmake!==undefined)) {
-        this.addDataToModel(clientData.carmake, archive);
+    if((clientData.carMake!==undefined)) {
+        this.addDataToModel(clientData.carMake, archive);
     }
-    if((clientData.carmodel!==undefined)){
-      archive.carmodel =archive.carmodel.concat(clientData.carmodel );
+    if((clientData.carModel!==undefined)){
+      archive.carModel =archive.carModel.concat(clientData.carModel );
     } 
-    if((clientData.AvgCars!==undefined)) {
-      archive.AvgCars =  (archive.AvgCars + clientData.AvgCars)/2;
+    if((clientData.avgCars!==undefined)) {
+      archive.avgCars =  (archive.avgCars + clientData.avgCars)/2;
     }
-  // console.log(archive);
    this.pushToAWS(archive);
-  
-  }, 500);
+  }, 5000);
   }
 
-  private addDataToModel(carmake,archive:Carsurvey){
-
+  private addDataToModel(carmake:string[], archive:Carsurvey): void {
+  
     var num : number;
      for (var i=0; i<carmake.length ; i++) {
         num = 0;
         var index = this.getIndex(carmake[i]);
-        num = parseInt(archive.carmake[index]) +1
-        archive.carmake[index] = num.toString();
+        num = parseInt(archive.carMake[index]) +1
+        archive.carMake[index] = num.toString();
      }
+
   }
 
-
-  private getIndex(carmake) : number {
+  private getIndex(carmake:string) : number {
     switch(carmake){
       case CarSurveyConstants.BMW: return 0;
       case CarSurveyConstants.LAMBORGHINI: return 1;
@@ -73,22 +73,13 @@ export class ProcessdataService {
     }
   }
 
-
-public  getJSON(): Observable<any> {
-    return this.http.get("./assets/data.json");
-}
-
-private pushToAWS(archive){
+private pushToAWS(archive:Carsurvey):void {
   // write the archive data to the api calls!
   let headers = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
    });
-
-   //console.log(archive);
- //  let httpParams = UtilsService.buildQueryParams(archive);
    let options = { headers: headers };
-//this.http.get('https://lprms608t1.execute-api.us-east-2.amazonaws.com/Prod/archive',options) .subscribe (data =>{});
- this.http.post(' https://lprms608t1.execute-api.us-east-2.amazonaws.com/Prod/store',archive,options).subscribe((data=>{ }));
+ this.http.post(' https://7gh619mog3.execute-api.us-east-2.amazonaws.com/Prod/store',archive,options).subscribe((data=>{ }));
 }
 }
 

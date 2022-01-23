@@ -1,5 +1,5 @@
-import { Component, SkipSelf, Input } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { Component, SkipSelf } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 @Component({
   selector: 'app-transportation',

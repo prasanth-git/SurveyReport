@@ -1,13 +1,13 @@
 {
 "adolescents" : 2,
 "unlicensed" : 2,
-"firsttimers" : 3,
+"firstTimers" : 3,
 "targetables" : 5,
-"carefuel" : 2,
+"careFuel" : 2,
 "FWD" : 2,
 "IDK" : 1,
 "RWD" :2,
-"AvgCars" : 5,
-"carmake" : ["2","4","3","2","2"],
-"carmodel" : ["X5","X3","URUS","HURACAN","Q5","Q5"]
+"avgCars" : 5,
+"carMake" : ["2","4","3","2","2"],
+"carModel" : ["X5","X3","URUS","HURACAN","Q5","Q5"]
 }

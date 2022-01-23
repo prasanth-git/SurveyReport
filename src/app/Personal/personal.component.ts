@@ -2,13 +2,13 @@ import { Component, SkipSelf } from '@angular/core';
 import { ControlContainer } from '@angular/forms';
 
 @Component({
-  selector: 'app-contact',
-  templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css'],
+  selector: 'app-personal',
+  templateUrl: './personal.component.html',
+  styleUrls: ['./personal.component.css'],
   viewProviders: [{
     provide: ControlContainer,
     useFactory: (container: ControlContainer) => container,
     deps: [[new SkipSelf(), ControlContainer]],
   }]
 })
-export class ContactComponent {}
+export class PersonalComponent {}

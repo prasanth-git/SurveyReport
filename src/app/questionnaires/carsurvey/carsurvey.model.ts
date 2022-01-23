@@ -1,15 +1,14 @@
 export class Carsurvey {
-    
+        avgCars : number
         adolescents : number 
-        unlicensed : number
-        firsttimers : number
-        targetables : number
-        carefuel : number
+        careFuel : number
+        carMake : string[]
+        carModel : string[]
+        firstTimers : number
         FWD : number
-        RWD: number
         IDK : number
-        AvgCars : number
-        carmake : string[]
-        carmodel : string[]
+        RWD: number
+        targetables : number
+        unlicensed : number
 }
 

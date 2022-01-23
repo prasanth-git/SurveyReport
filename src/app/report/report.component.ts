@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions, ChartTitleOptions, ChartLegendOptions } from 'chart.js';
 import { SingleDataSet, Label } from 'ng2-charts';
 import * as pluginLabels from 'chartjs-plugin-labels';
-import { ProcessdataService } from '../processdata.service';
 
-
+import { ProcessdataService } from '../service/processdata.service';
 
 @Component({
   selector: 'app-report',
@@ -35,7 +34,6 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
 
-
     this.pieChartOptions1 = this.createOptions("PARTICIPANTS");
     this.pieChartOptions2 =  this.createOptions("DRIVE TRAIN PREFERENCE");
     this.pieChartOptions3 = this.createOptions("CAR MODEL");
@@ -51,12 +49,12 @@ export class ReportComponent implements OnInit {
     
     this.processdataService.getJSON().subscribe(
       data =>{
-        this.pieChartData = [data.adolescents, data.unlicensed, data.firsttimers,data.targetables];
+        this.pieChartData = [data.adolescents, data.unlicensed, data.firstTimers,data.targetables];
         this.pieChartData2 = [data.FWD,data.RWD,data.IDK]
-        this.pieChartData3 = data.carmake
-        this.average = data.AvgCars
-        this.carefuel = (data.carefuel/data.targetables) * 100
-        var temp = this.getCarModel(data.carmodel);
+        this.pieChartData3 = data.carMake
+        this.average = data.avgCars
+        this.carefuel = (data.careFuel/data.targetables) * 100
+        var temp = this.getCarModel(data.carModel);
         this.pieChartLabels4= Object.keys(temp); 
         this.pieChartData4= Object["values"](temp);
         this.chartReady = true;
@@ -81,7 +79,7 @@ export class ReportComponent implements OnInit {
 
   private styleLegend(): ChartLegendOptions {
     return {
-      position : "top",
+      position : "right",
     }
   }
 
